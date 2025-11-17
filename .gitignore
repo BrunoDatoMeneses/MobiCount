@@ -1,0 +1,47 @@
+# -------------------------
+# PyCharm / IntelliJ
+# -------------------------
+.idea/
+*.iml
+*.iws
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/shelf/
+
+# -------------------------
+# VS Code
+# -------------------------
+.vscode/
+.vscode/*
+!.vscode/settings.json       
+!.vscode/extensions.json     
+!.vscode/launch.json        
+
+# -------------------------
+# Python (optional)
+# -------------------------
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+.env/
+
+# -------------------------
+# Data
+# -------------------------
+Results/*
+Video/*
+!Results/.gitkeep
+!Video/.gitkeep
+
+# -------------------------
+# Yolo
+# -------------------------
+*.pt
+
+# -------------------------
+# Other
+# -------------------------
+.DS_Store
+

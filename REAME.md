@@ -1,0 +1,4 @@
+- Install python -> https://www.python.org/downloads/
+- Install your favorite python IDE (example: Pycharm -> https://www.jetbrains.com/pycharm/download/?section=windows)
+- Run IDE
+- Run FlowCounter.ipynb step by step
