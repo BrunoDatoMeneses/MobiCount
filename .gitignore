@@ -30,10 +30,10 @@ venv/
 # -------------------------
 # Data
 # -------------------------
-Results/*
-Video/*
-!Results/.gitkeep
-!Video/.gitkeep
+#Results/*
+#Video/*
+#!Results/.gitkeep
+#!Video/.gitkeep
 
 # -------------------------
 # Yolo
