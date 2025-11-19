@@ -30,8 +30,8 @@ venv/
 # -------------------------
 # Data
 # -------------------------
-Results/*
-Video/*
+#Results/*
+#Video/*
 #!Results/.gitkeep
 #!Video/.gitkeep
 
