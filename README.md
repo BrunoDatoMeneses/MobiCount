@@ -1,6 +1,7 @@
 ### Installs
 
-- Install python 3.12 -> https://www.python.org/downloads/release/python-3120/
+- Install python 3.12 -> https://www.python.org/downloads/release/python-3120/ 
+- Other python compatible versions (3.13) 
 - Accept every request from python installer
 - Install your favorite python IDE 
   - Pycharm -> https://www.jetbrains.com/pycharm/download/?section=windows
