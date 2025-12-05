@@ -302,7 +302,7 @@ print("Results: " + str(results.classwise_count))
 
 date_time = "_" + datetime.now().strftime("%Y%m%d_%H%M%S")
 
-for _vehicle in counts_by_range_lists.keys():
+"""for _vehicle in counts_by_range_lists.keys():
 
     for _direction in counts_by_range_lists[_vehicle]:
 
@@ -310,7 +310,7 @@ for _vehicle in counts_by_range_lists.keys():
             
             if counts_by_range_lists[_vehicle][_direction] != 0:
                 writer = csv.writer(f)
-                writer.writerows(counts_by_range_lists[_vehicle][_direction])
+                writer.writerows(counts_by_range_lists[_vehicle][_direction])"""
 
 
 for _vehicle in events_dict.keys():
@@ -324,11 +324,11 @@ for _vehicle in events_dict.keys():
                 writer = csv.writer(f)
                 writer.writerows(events_dict[_vehicle][_direction])
 
-        with open(RESULTS_PATH + VIDEO_NAME + "_events_"+ _vehicle + "_" + _direction + date_time +".csv", "a", newline="") as f:
+        """with open(RESULTS_PATH + VIDEO_NAME + "_events_"+ _vehicle + "_" + _direction + date_time +".csv", "a", newline="") as f:
             
             if events_dict[_vehicle][_direction] != 0:
                 writer = csv.writer(f)
-                writer.writerows(events_dict[_vehicle][_direction])
+                writer.writerows(events_dict[_vehicle][_direction])"""
 
     
 
