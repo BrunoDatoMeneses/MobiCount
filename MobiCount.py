@@ -58,8 +58,10 @@ print("Install ready")
 
 FFMPEG_PATH = "C:/Users/bruno/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.0.1-full_build/bin/ffmpeg.exe"
 PROJECT_FOLDER = "C:/Users/bruno/OneDrive/Documents/Repositories/MOBICOUNT/MobiCount"
-#VIDEO_NAME = "1191553-hd_1920_1080_25fps"
-VIDEO_NAME = "GX010072"
+# FFMPEG_PATH = "ffmpeg"
+# PROJECT_FOLDER = "/home/adminramses/Documents/MobiCount" # RAMSES
+
+VIDEO_NAME = "1191553-hd_1920_1080_25fps"
 START_DATE_AND_HOUR = datetime(2025, 1, 1, 14, 32, 9)
 SECONDS_RANGE = 5 
 
