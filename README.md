@@ -5,6 +5,10 @@
 - Accept every request from python installer
 - Install your favorite python IDE 
   - Pycharm -> https://www.jetbrains.com/pycharm/download/?section=windows
+- Install ffmpeg
+  - Open terminal
+    - On windows : winget install ffmpeg
+    - On mac : brew install ffmpeg
 
 ### Pycharm
 
@@ -16,3 +20,8 @@
   - If not, add manually python interpreter 3.12
 - Wait if automatic updates are running (bottom right of the window)
 - Run FlowCounter.ipynb step by step (wait for the notebook package to be installed when running first step)
+
+### FFMPEG
+
+- Enveler flux audio : ffmpeg -i input.mp4 -c:v copy -an output.mp4
+
