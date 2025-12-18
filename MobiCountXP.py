@@ -337,7 +337,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
 
     ## ➡️ Step 7 — Compress result video 
 
-    print("Compressing video...")
+    """print("Compressing video...")
 
     output_file = RESULTS_PATH + date_time + "__" +  VIDEO_NAME + ".mp4"
 
@@ -357,7 +357,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
 
     #os.remove(RESULTS_PATH + VIDEO_NAME +".avi")
 
-    print("Compressed video available at " + output_file)
+    print("Compressed video available at " + output_file)"""
 
 
 
