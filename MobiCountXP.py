@@ -272,7 +272,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
             cv2.imwrite(RESULTS_PATH + date_time + "__" + VIDEO_NAME+"_FirstFrame.jpg", frame_resized)
             print("First frame available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME+"_FirstFrame.jpg")
 
-    print(events_dict)
+    #print(events_dict)
     #print(counts_by_range_lists)
     print("Results: " + str(results.classwise_count))
 
@@ -308,7 +308,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
                     rowForCSV = rowForCSV + [0, 0]
 
 
-            print(rowForCSV)
+            #print(rowForCSV)
         
         
             writer = csv.writer(f)
