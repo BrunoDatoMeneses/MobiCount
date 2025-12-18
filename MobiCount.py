@@ -61,7 +61,7 @@ PROJECT_FOLDER = "C:/Users/bruno/OneDrive/Documents/Repositories/MOBICOUNT/MobiC
 # FFMPEG_PATH = "ffmpeg"
 # PROJECT_FOLDER = "/home/adminramses/Documents/MobiCount" # RAMSES
 
-VIDEO_NAME = "30FPS_GX050072"
+VIDEO_NAME = "no-audio_2GX050072"
 START_DATE_AND_HOUR = datetime(2025, 1, 1, 14, 32, 9)
 
 
@@ -79,10 +79,10 @@ CLASSES_NAMES = ["person", "bicycle", "car", "motorcycle", "bus", "truck"]
   7: truck
  """
 
-#REGION = [(1500, 0), (1500, 3000)]  # VERTICAL LINE 
-#REGION = [(1352, 0), (1352, 2028)]  # VERTICAL LINE 2K middle
+#REGION = [(960, 0), (960, 1080)]  # VERTICAL LINE 1080
+REGION = [(1352, 0), (1352, 2028)]  # VERTICAL LINE 2K middle
 #REGION = [(676, 0), (676, 2028)]  # VERTICAL LINE 2K first quarter
-REGION = [(901, 0), (901, 2028)]  # VERTICAL LINE 2K first tier
+#REGION = [(901, 0), (901, 2028)]  # VERTICAL LINE 2K first tier
 #REGION = [(0, 700), (1920, 700)]    # HORIZONTAL LINE
 #REGION = [(860, 0), (860, 1080), (1060, 1080), (1060, 0)]  # VERTICAL RECTANGLE
 #REGION = [(760, 0), (760, 1500), (1160, 1500), (1160, 0)]  # THIN VERTICAL RECTANGLE

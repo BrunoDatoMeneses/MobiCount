@@ -14,6 +14,8 @@ import os
 FPS = 30
 FFMPEG_PATH = "C:/Users/bruno/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.0.1-full_build/bin/ffmpeg.exe"
 INPUT_FOLDER = "C:/Users/bruno/OneDrive/Documents/Repositories/brunodato/MIDOC/Données/Comptage/1/no-audio/"
+# FFMPEG_PATH = "ffmpeg" # RAMSES
+# INPUT_FOLDER = "/home/adminramses/Documents/MobiCount" # RAMSES
 OUTPUT_FOLDER = INPUT_FOLDER + str(FPS) + "FPS/"
 
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)

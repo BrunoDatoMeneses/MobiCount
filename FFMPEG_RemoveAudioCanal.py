@@ -11,7 +11,9 @@ import os
 ## Remove Audio Canal ffmpeg -i input.mp4 -c:v copy -an output.mp4
 
 FFMPEG_PATH = "C:/Users/bruno/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.0.1-full_build/bin/ffmpeg.exe"
-INPUT_FOLDER = "C:/Users/bruno/OneDrive/Documents/Repositories/brunodato/MIDOC/Données/Comptage/1/"
+INPUT_FOLDER = "C:/Users/bruno/OneDrive/Documents/Repositories/brunodato/MIDOC/Données/Comptage/2/"
+# FFMPEG_PATH = "ffmpeg" # RAMSES
+# INPUT_FOLDER = "/home/adminramses/Documents/MobiCount" # RAMSES
 OUTPUT_FOLDER = INPUT_FOLDER +"no-audio/"
 
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
