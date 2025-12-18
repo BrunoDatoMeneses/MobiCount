@@ -61,13 +61,14 @@ PROJECT_FOLDER = "C:/Users/bruno/OneDrive/Documents/Repositories/MOBICOUNT/MobiC
 # FFMPEG_PATH = "ffmpeg"
 # PROJECT_FOLDER = "/home/adminramses/Documents/MobiCount" # RAMSES
 
-VIDEO_NAME = "1191553-hd_1920_1080_25fps"
+VIDEO_NAME = "30FPS_GX050072"
 START_DATE_AND_HOUR = datetime(2025, 1, 1, 14, 32, 9)
-SECONDS_RANGE = 5 
+
 
 ## ➡️ Step 3 — Set the parameters
 
 CLASSES = [0, 1, 2, 3, 5, 7] # Filters results by class index. For example, classes=[0, 2, 3] only tracks persons, cars and motorcycles.
+CLASSES_NAMES = ["person", "bicycle", "car", "motorcycle", "bus", "truck"]
 
 """ names:
   0: person
@@ -181,8 +182,8 @@ previous_results_classes = {}
 
 
 events_dict = {}
-counts_by_range = {}
-counts_by_range_lists = {}
+#counts_by_range = {}
+#counts_by_range_lists = {}
 
 while cap.isOpened():
     frame_index = int(cap.get(cv2.CAP_PROP_POS_FRAMES))
@@ -211,6 +212,10 @@ while cap.isOpened():
 
     if (results_classes_str) != (previous_results_classes_str):
 
+        event_dict = {}
+
+        event_dict["timeStamp"]=current_time.strftime("%H:%M:%S")
+
         for vehicle, counts in results_classes.items():
             
             diff_in = 0
@@ -225,42 +230,38 @@ while cap.isOpened():
                 diff_in = int(results_classes[vehicle]["IN"])
                 diff_out = int(results_classes[vehicle]["OUT"])
 
+            
+            event_dict[vehicle]={"IN":0,"OUT":0}
+
             if diff_in>0:
 
-                if vehicle in events_dict.keys() :
-                    events_dict[vehicle]["IN"].append([current_time.strftime("%H:%M:%S"),vehicle,"IN",diff_in])
-                else:
-                    events_dict[vehicle]={"IN":[],"OUT":[]}
-                    events_dict[vehicle]["IN"].append([current_time.strftime("%H:%M:%S"),vehicle,"IN",diff_in])
+                event_dict[vehicle]["IN"] = diff_in
 
-
-
-                if vehicle in counts_by_range.keys() :
+                """if vehicle in counts_by_range.keys() :
                     counts_by_range[vehicle]["IN"] += diff_in
                 else:
                     counts_by_range[vehicle] = {}
                     counts_by_range[vehicle]["IN"] = diff_in
-                    counts_by_range[vehicle]["OUT"] = 0
+                    counts_by_range[vehicle]["OUT"] = 0"""
             
 
             if diff_out>0:
 
-                if vehicle in events_dict.keys() :
-                    events_dict[vehicle]["OUT"].append([current_time.strftime("%H:%M:%S"),vehicle,"OUT",diff_out])
-                else:
-                    events_dict[vehicle]={"IN":[],"OUT":[]}
-                    events_dict[vehicle]["OUT"].append([current_time.strftime("%H:%M:%S"),vehicle,"OUT",diff_out])
+                event_dict[vehicle]["OUT"] = diff_out
 
-                if vehicle in counts_by_range.keys() :
+                """if vehicle in counts_by_range.keys() :
                     counts_by_range[vehicle]["OUT"] += diff_out
                 else:
                     counts_by_range[vehicle] = {}
                     counts_by_range[vehicle]["IN"] = 0
-                    counts_by_range[vehicle]["OUT"] = diff_out
+                    counts_by_range[vehicle]["OUT"] = diff_out"""
+                
+        events_dict[str(frame_index)] = event_dict
 
 
 
-    if((int(current_time.timestamp()) % SECONDS_RANGE == 0) and (frame_index % fps == 0)):
+
+    """if((int(current_time.timestamp()) % SECONDS_RANGE == 0) and (frame_index % fps == 0)):
         
         for _vehicle in counts_by_range.keys():
 
@@ -274,7 +275,7 @@ while cap.isOpened():
                 counts_by_range_lists[_vehicle]["OUT"].append([current_time.strftime("%H:%M:%S"),counts_by_range[_vehicle]["OUT"]])
 
             
-        counts_by_range = {}
+        counts_by_range = {}"""
 
 
 
@@ -288,11 +289,11 @@ while cap.isOpened():
 
     if frame_index == 1:
 
-        cv2.imwrite(RESULTS_PATH+"FirstFrame.jpg", frame_resized)
+        cv2.imwrite(RESULTS_PATH+VIDEO_NAME+"_FirstFrame.jpg", frame_resized)
         print("First frame available at " + RESULTS_PATH + "FirstFrame.jpg")
 
 print(events_dict)
-print(counts_by_range_lists)
+#print(counts_by_range_lists)
 print("Results: " + str(results.classwise_count))
 
 
@@ -313,22 +314,37 @@ date_time = "_" + datetime.now().strftime("%Y%m%d_%H%M%S")
                 writer.writerows(counts_by_range_lists[_vehicle][_direction])"""
 
 
-for _vehicle in events_dict.keys():
+with open(RESULTS_PATH + VIDEO_NAME + "_events" + date_time + ".csv", "a", newline="") as f:
+
+    fieldnames = ["TIME", "FRAME"]
+    for _vehicle in CLASSES_NAMES:
+        fieldnames += [_vehicle + " IN", _vehicle + " OUT"]
+
+    writer = csv.DictWriter(f, fieldnames=fieldnames)
+    writer.writeheader()
+
+    for _frameIndex, _eventDict in events_dict.items():
+
+        #print(_eventDict)
+
+        rowForCSV = [_eventDict["timeStamp"],  _frameIndex]
+
+        for _vehicle in CLASSES_NAMES:
 
 
-    for _direction in events_dict[_vehicle]: 
+            if _vehicle in _eventDict.keys():
+                rowForCSV = rowForCSV + [_eventDict[_vehicle]["IN"], _eventDict[_vehicle]["OUT"]]
+            else:
+                rowForCSV = rowForCSV + [0, 0]
 
-        with open(RESULTS_PATH + VIDEO_NAME + "_events" + date_time + ".csv", "a", newline="") as f:
-            
-            if events_dict[_vehicle][_direction] != 0:
-                writer = csv.writer(f)
-                writer.writerows(events_dict[_vehicle][_direction])
 
-        """with open(RESULTS_PATH + VIDEO_NAME + "_events_"+ _vehicle + "_" + _direction + date_time +".csv", "a", newline="") as f:
-            
-            if events_dict[_vehicle][_direction] != 0:
-                writer = csv.writer(f)
-                writer.writerows(events_dict[_vehicle][_direction])"""
+        print(rowForCSV)
+    
+    
+        writer = csv.writer(f)
+        writer.writerow(rowForCSV)
+
+
 
     
 

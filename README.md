@@ -23,5 +23,7 @@
 
 ### FFMPEG
 
-- Enveler flux audio : ffmpeg -i input.mp4 -c:v copy -an output.mp4
+- Remove audio canam: ffmpeg -i input.mp4 -c:v copy -an output.mp4
+- Filter fps: ffmpeg -i input.mp4 -filter:v "fps=30" output.mp4
+
 
