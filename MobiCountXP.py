@@ -10,6 +10,21 @@ import csv
 from ultralytics import solutions
 import copy
 
+VERBOSE = False
+
+def log(*args):
+
+
+    if VERBOSE:
+
+        message = ""
+        for _arg in args:
+            message += str(_arg) + " "
+
+        print(message)
+
+
+
 def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
 
     ## ➡️ Step 1 — Install dependencies
@@ -22,34 +37,34 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
 
         process = subprocess.Popen(["python", "--version"], stdout=subprocess.PIPE, text=True)
         for line in process.stdout:
-            print(line, end="")
+            log(line, end="")
 
 
         process = subprocess.run(["python", "-m","ensurepip","--upgrade"], stdout=subprocess.PIPE, text=True)
         for line in process.stdout:
-            print(line, end="")
+            log(line, end="")
 
         process = subprocess.run(["python", "-m","pip","install","opencv-python"], stdout=subprocess.PIPE, text=True)
         for line in process.stdout:
-            print(line, end="")
+            log(line, end="")
 
 
 
         process = subprocess.run(["python", "-m","pip","install","python-ffmpeg"], stdout=subprocess.PIPE, text=True)
         for line in process.stdout:
-            print(line, end="")
+            log(line, end="")
 
         process = subprocess.run(["python", "-m","pip","install","ultralytics"], stdout=subprocess.PIPE, text=True)
         for line in process.stdout:
-            print(line, end="")
+            log(line, end="")
 
         process = subprocess.run(["python", "-m","pip","install","--no-cache-dir","shapely>=2.0.0"], stdout=subprocess.PIPE, text=True)
         for line in process.stdout:
-            print(line, end="")
+            log(line, end="")
 
         process = subprocess.run(["python", "-m","pip","install","--no-cache-dir","lap>=0.5.12"], stdout=subprocess.PIPE, text=True)
         for line in process.stdout:
-            print(line, end="")
+            log(line, end="")
 
 
 
@@ -58,7 +73,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
 
 
 
-    print("Install ready")
+    log("Install ready")
     
 
 
@@ -149,7 +164,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
     fourcc = cv2.VideoWriter_fourcc(*codecs[3])  # ou "H264", "XVID", "MJPG"
     video_writer = cv2.VideoWriter(RESULTS_PATH + date_time + "__" + VIDEO_NAME +".avi", fourcc, NEW_FPS, (NEW_WIDTH, NEW_HEIGHT))
 
-    print("Fps:",fps,"Size:",w,"x",h,"Total frames:",total_frames)
+    log("Fps:",fps,"Size:",w,"x",h,"Total frames:",total_frames)
 
 
 
@@ -178,7 +193,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
 
     os.environ['OPENCV_FFMPEG_READ_ATTEMPTS'] = '10000'
     # Process video
-    print("Processing Video...")
+    log("Processing Video...")
 
     results = None
 
@@ -200,14 +215,14 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
 
         if frame_index % (fps) == 0:
             ratio = frame_index/total_frames
-            print(str(round(ratio*100, 2)) + " % Frames processed")
-            #print(str(timedelta(seconds=elapsed_seconds)) + " Time processed")
+            log(str(round(ratio*100, 2)) + " % Frames processed")
+            #log(str(timedelta(seconds=elapsed_seconds)) + " Time processed")
 
         success, im0 = cap.read()
 
         if not success:
-            print("100 % Frames processed")
-            print("Video frame is empty or processing is complete.")
+            log("100 % Frames processed")
+            log("Video frame is empty or processing is complete.")
             break
 
         results = counter(im0)
@@ -270,11 +285,11 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
         if frame_index == 1:
 
             cv2.imwrite(RESULTS_PATH + date_time + "__" + VIDEO_NAME+"_FirstFrame.jpg", frame_resized)
-            print("First frame available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME+"_FirstFrame.jpg")
+            log("First frame available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME+"_FirstFrame.jpg")
 
-    #print(events_dict)
-    #print(counts_by_range_lists)
-    print("Results: " + str(results.classwise_count))
+    #log(events_dict)
+    #log(counts_by_range_lists)
+    log("Results: " + str(results.classwise_count))
 
 
 
@@ -295,7 +310,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
 
         for _frameIndex, _eventDict in events_dict.items():
 
-            #print(_eventDict)
+            #log(_eventDict)
 
             rowForCSV = [_eventDict["timeStamp"],  _frameIndex]
 
@@ -308,7 +323,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
                     rowForCSV = rowForCSV + [0, 0]
 
 
-            #print(rowForCSV)
+            #log(rowForCSV)
         
         
             writer = csv.writer(f)
@@ -327,9 +342,9 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
             row = {"TYPE": vehicle, **counts}
             writer.writerow(row)
 
-    print("Counts available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_counts.csv")
-    print("Events available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_events.csv")
-    print("Video available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME +".avi")
+    log("Counts available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_counts.csv")
+    log("Events available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_events.csv")
+    log("Video available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME +".avi")
 
     cap.release()
     video_writer.release()
@@ -337,7 +352,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
 
     ## ➡️ Step 7 — Compress result video 
 
-    """print("Compressing video...")
+    """log("Compressing video...")
 
     output_file = RESULTS_PATH + date_time + "__" +  VIDEO_NAME + ".mp4"
 
@@ -352,12 +367,12 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
         '-y'  # Overwrite
     ],stdout=subprocess.PIPE, text=True)
     for line in process.stdout:
-        print(line, end="")
+        log(line, end="")
 
 
     #os.remove(RESULTS_PATH + VIDEO_NAME +".avi")
 
-    print("Compressed video available at " + output_file)"""
+    log("Compressed video available at " + output_file)"""
 
 
 
@@ -409,5 +424,5 @@ REGION_LIST = [REGION_TEST,
 
 for _videoName, _date, _region in zip(VIDEO_LIST, DATES_LIST, REGION_LIST):
 
-    print(_videoName,_date, _region)
+    log(_videoName,_date, _region)
     count(_videoName, _date, _region)
