@@ -15,7 +15,7 @@ FPS = 30
 FFMPEG_PATH = "C:/Users/bruno/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.0.1-full_build/bin/ffmpeg.exe"
 # FFMPEG_PATH = "ffmpeg" # RAMSES
 PROJECT_FOLDER = "C:/Users/bruno/OneDrive/Documents/Repositories/MOBICOUNT/MobiCount/Results/"
-# INPUT_FOLDER = "/home/adminramses/Documents/MobiCount/Results/" # RAMSES
+# PROJECT_FOLDER = "/home/adminramses/Documents/MobiCount/Results/" # RAMSES
 
 INPUT_FILE = PROJECT_FOLDER+"GX010072_.avi"
 OUTPUT_FILE = PROJECT_FOLDER+"GX010072_.mp4"

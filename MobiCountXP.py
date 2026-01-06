@@ -10,7 +10,7 @@ import csv
 from ultralytics import solutions
 import copy
 
-VERBOSE = False
+VERBOSE = True
 
 def log(*args):
 
@@ -201,6 +201,8 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
     previous_results_classes_str = str({})
     results_classes = {}
     previous_results_classes = {}
+    object_ids = {}
+    previous_object_ids = {}
 
 
     events_dict = {}
@@ -231,12 +233,22 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
 
         results_classes = results.classwise_count
         results_classes_str = str(results_classes)
+        
+        
+        #log(counter.counted_ids)
+        
+
+        object_ids = counter.counted_ids
+
+        new_object_ids = list(set(object_ids) - set(previous_object_ids))
 
         if (results_classes_str) != (previous_results_classes_str):
 
             event_dict = {}
 
             event_dict["timeStamp"]=current_time.strftime("%H:%M:%S")
+            event_dict["ids"]=new_object_ids
+            
 
             for vehicle, counts in results_classes.items():
                 
@@ -269,6 +281,8 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
                     
             events_dict[str(frame_index)] = event_dict
 
+            #log(event_dict)
+            
 
 
 
@@ -276,6 +290,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
 
 
 
+        previous_object_ids = copy.deepcopy(object_ids)
         previous_results_classes = copy.deepcopy(results_classes)
         previous_results_classes_str = str(previous_results_classes)
 
@@ -305,6 +320,8 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
         for _vehicle in CLASSES_NAMES:
             fieldnames += [_vehicle + " IN", _vehicle + " OUT"]
 
+        fieldnames += ["IDS"]
+
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
 
@@ -323,6 +340,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
                     rowForCSV = rowForCSV + [0, 0]
 
 
+            rowForCSV = rowForCSV + [_eventDict["ids"]]
             #log(rowForCSV)
         
         
@@ -352,7 +370,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
 
     ## ➡️ Step 7 — Compress result video 
 
-    """log("Compressing video...")
+    log("Compressing video...")
 
     output_file = RESULTS_PATH + date_time + "__" +  VIDEO_NAME + ".mp4"
 
@@ -370,16 +388,16 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
         log(line, end="")
 
 
-    #os.remove(RESULTS_PATH + VIDEO_NAME +".avi")
+    os.remove(RESULTS_PATH + date_time + "__" + VIDEO_NAME +".avi")
 
-    log("Compressed video available at " + output_file)"""
+    log("Compressed video available at " + output_file)
 
 
 
 
 VIDEO_LIST = [
-              #"1191553-hd_1920_1080_25fps",
-              #"no-audio_1GX010072",
+              "1191553-hd_1920_1080_25fps",
+              "no-audio_1GX010072",
               "no-audio_1GX020072",
               "no-audio_1GX030072",
               "no-audio_1GX040072",
@@ -395,8 +413,8 @@ START_DATE_AND_TIME = datetime(2025, 11, 25, 9, 32, 9)
 MAX_DURATION = timedelta(minutes=8, seconds=51)
 
 DATES_LIST = [
-              #datetime(2025, 1, 1, 14, 32, 9),
-              #START_DATE_AND_TIME,
+              datetime(2025, 1, 1, 14, 32, 9),
+              START_DATE_AND_TIME,
               START_DATE_AND_TIME+MAX_DURATION,
               START_DATE_AND_TIME+2*MAX_DURATION,
               START_DATE_AND_TIME+3*MAX_DURATION,
@@ -413,8 +431,8 @@ REGION_1 = [(901, 0), (901, 2028)]  # VERTICAL LINE 2K first tier
 REGION_2 = [(1352, 0), (1352, 2028)]  # VERTICAL LINE 2K middle 
 
 REGION_LIST = [
-               #REGION_TEST,
-               #REGION_1,
+               REGION_TEST,
+               REGION_1,
                REGION_1,
                REGION_1,
                REGION_1,
