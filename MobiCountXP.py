@@ -383,7 +383,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
         '-r', str(fps/2),               # FPS reduction
         output_file,
         '-y'  # Overwrite
-    ],capture_output=False,text=True, check=True)
+    ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, text=True, check=True)
 
     """if VERBOSE:
         for line in process.stdout:
