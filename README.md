@@ -25,5 +25,7 @@
 
 - Remove audio canam: ffmpeg -i input.mp4 -c:v copy -an output.mp4
 - Filter fps: ffmpeg -i input.mp4 -filter:v "fps=30" output.mp4
+- Get 30 first seconds: ffmpeg -i input.mp4 -t 30 -c copy output.mp4
+
 
 
