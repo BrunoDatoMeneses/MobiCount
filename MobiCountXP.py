@@ -398,7 +398,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
 
 
 VIDEO_LIST = [
-              #"no-audio_2GX050072_30s",
+              "no-audio_2GX050072_30s",
               "1191553-hd_1920_1080_25fps",
               "no-audio_1GX010072",
               "no-audio_1GX020072",
@@ -416,7 +416,7 @@ START_DATE_AND_TIME = datetime(2025, 11, 25, 9, 32, 9)
 MAX_DURATION = timedelta(minutes=8, seconds=51)
 
 DATES_LIST = [
-              #START_DATE_AND_TIME,
+              START_DATE_AND_TIME,
               datetime(2025, 1, 1, 14, 32, 9),
               START_DATE_AND_TIME,
               START_DATE_AND_TIME+MAX_DURATION,
@@ -435,7 +435,7 @@ REGION_1 = [(901, 0), (901, 2028)]  # VERTICAL LINE 2K first tier
 REGION_2 = [(1352, 0), (1352, 2028)]  # VERTICAL LINE 2K middle 
 
 REGION_LIST = [
-               #REGION_2,
+               REGION_2,
                REGION_TEST,
                REGION_1,
                REGION_1,
