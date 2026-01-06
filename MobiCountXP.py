@@ -10,7 +10,7 @@ import csv
 from ultralytics import solutions
 import copy
 
-VERBOSE = True
+VERBOSE = False
 
 def log(*args):
 
@@ -379,16 +379,18 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
         '-vcodec', 'libx265',           # Codec H265
         '-crf', '30',                   # 28-32 (18=better quality, 51=worse)
         '-preset', 'slow',              # Slower but better compression
-        '-vf', 'scale=iw*0.75:ih*0.5', # Rsolution 75%
+        '-vf', 'scale=iw*0.75:ih*0.5', # Rsolution 50%
         '-r', str(fps/2),               # FPS reduction
         output_file,
         '-y'  # Overwrite
     ],stdout=subprocess.PIPE, text=True)
-    for line in process.stdout:
-        log(line, end="")
+
+    if VERBOSE:
+        for line in process.stdout:
+            log(line, end="")
 
 
-    os.remove(RESULTS_PATH + date_time + "__" + VIDEO_NAME +".avi")
+    #os.remove(RESULTS_PATH + date_time + "__" + VIDEO_NAME +".avi")
 
     log("Compressed video available at " + output_file)
 
@@ -396,7 +398,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
 
 
 VIDEO_LIST = [
-              "no-audio_2GX050072_30s",
+              #"no-audio_2GX050072_30s",
               "1191553-hd_1920_1080_25fps",
               "no-audio_1GX010072",
               "no-audio_1GX020072",
@@ -414,7 +416,7 @@ START_DATE_AND_TIME = datetime(2025, 11, 25, 9, 32, 9)
 MAX_DURATION = timedelta(minutes=8, seconds=51)
 
 DATES_LIST = [
-              START_DATE_AND_TIME,
+              #START_DATE_AND_TIME,
               datetime(2025, 1, 1, 14, 32, 9),
               START_DATE_AND_TIME,
               START_DATE_AND_TIME+MAX_DURATION,
@@ -433,7 +435,7 @@ REGION_1 = [(901, 0), (901, 2028)]  # VERTICAL LINE 2K first tier
 REGION_2 = [(1352, 0), (1352, 2028)]  # VERTICAL LINE 2K middle 
 
 REGION_LIST = [
-               REGION_2,
+               #REGION_2,
                REGION_TEST,
                REGION_1,
                REGION_1,
