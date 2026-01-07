@@ -10,7 +10,7 @@ import csv
 from ultralytics import solutions
 import copy
 
-VERBOSE = False
+VERBOSE = True
 
 def log(*args):
 
@@ -124,18 +124,21 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
 
     # Other parameters
 
-    VIDEO_FOLDER = PROJECT_FOLDER +"/Video/"
-    VIDEO_PATH = VIDEO_FOLDER + VIDEO_NAME + ".mp4"
-    RESULTS_PATH = PROJECT_FOLDER + "/Results/"
-
-    # Open the video file
-
+    date = datetime.now().strftime("%Y%m%d")
     date_time =  datetime.now().strftime("%Y%m%d_%H%M%S")
 
+    
+
+    VIDEO_FOLDER = PROJECT_FOLDER +"/Video/"
+    VIDEO_PATH = VIDEO_FOLDER + VIDEO_NAME + ".mp4"
+    RESULTS_PATH = PROJECT_FOLDER + "/Results/" + date + "/"
+
+    os.makedirs(RESULTS_PATH, exist_ok=True)
+
+    # Open the video file
+    
+
     start_time = START_DATE_AND_HOUR
-
-
-
     video_path = VIDEO_PATH
     cap = cv2.VideoCapture(video_path)
 
