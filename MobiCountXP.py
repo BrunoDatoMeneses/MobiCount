@@ -382,7 +382,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION):
         '-vcodec', 'libx265',           # Codec H265
         '-crf', '30',                   # 28-32 (18=better quality, 51=worse)
         '-preset', 'slow',              # Slower but better compression
-        '-vf', 'scale=iw*0.75:ih*0.5', # Rsolution 50%
+        '-vf', 'scale=iw*0.5:ih*0.5', # Rsolution 50%
         '-r', str(fps/2),               # FPS reduction
         output_file,
         '-y'  # Overwrite
