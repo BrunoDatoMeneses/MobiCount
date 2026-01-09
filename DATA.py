@@ -20,11 +20,11 @@ from datetime import datetime, timedelta
               ]"""
 
 VIDEO_LIST = [
-            "1191553-hd_1920_1080_25fps",
-              "30FPS_no-audio_1GX010072",
-              "30FPS_no-audio_1GX020072",
-              "30FPS_no-audio_1GX030072",
-              "30FPS_no-audio_1GX040072",
+            # "1191553-hd_1920_1080_25fps",
+            #   "30FPS_no-audio_1GX010072",
+            #   "30FPS_no-audio_1GX020072",
+            #   "30FPS_no-audio_1GX030072",
+            #   "30FPS_no-audio_1GX040072",
               "30FPS_no-audio_1GX050072",
               "30FPS_no-audio_2GX010072",
               "30FPS_no-audio_2GX020072",
@@ -38,11 +38,11 @@ MAX_DURATION = timedelta(minutes=8, seconds=51)
 
 DATES_LIST = [
             # START_DATE_AND_TIME,
-            datetime(2025, 1, 1, 14, 32, 9),
-              START_DATE_AND_TIME,
-              START_DATE_AND_TIME+MAX_DURATION,
-              START_DATE_AND_TIME+2*MAX_DURATION,
-              START_DATE_AND_TIME+3*MAX_DURATION,
+            # datetime(2025, 1, 1, 14, 32, 9),
+            #   START_DATE_AND_TIME,
+            #   START_DATE_AND_TIME+MAX_DURATION,
+            #   START_DATE_AND_TIME+2*MAX_DURATION,
+            #   START_DATE_AND_TIME+3*MAX_DURATION,
               START_DATE_AND_TIME+4*MAX_DURATION,
               START_DATE_AND_TIME,
               START_DATE_AND_TIME+MAX_DURATION,
@@ -57,11 +57,11 @@ REGION_2 = [(1352, 0), (1352, 2028)]  # VERTICAL LINE 2K middle
 
 REGION_LIST = [
             # REGION_2,
-               REGION_TEST,
-               REGION_1,
-               REGION_1,
-               REGION_1,
-               REGION_1,
+              #  REGION_TEST,
+              #  REGION_1,
+              #  REGION_1,
+              #  REGION_1,
+              #  REGION_1,
                REGION_1,
                REGION_2,
                REGION_2,
