@@ -9,23 +9,28 @@ import cv2
 import csv
 from ultralytics import solutions
 import copy
+import logging
+
 
 VERBOSE = True
+
+logger = logging.getLogger(__name__)
 
 def log(*args):
 
 
     if VERBOSE:
 
-        message = ""
+        message = datetime.now().strftime("[%Y%m%d_%H:%M:%S]") + " "
         for _arg in args:
             message += str(_arg) + " "
 
-        print(message)
+        #print(message)
+        logger.info(message)
 
 
 
-def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH):
+def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, DATE, DATE_TIME, RESULTS_PATH):
 
     ## ➡️ Step 1 — Install dependencies
 
@@ -124,14 +129,14 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH):
 
     # Other parameters
 
-    date = datetime.now().strftime("%Y%m%d")
-    date_time =  datetime.now().strftime("%Y%m%d_%H%M%S")
+    date = DATE
+    date_time =  DATE_TIME
 
     
 
     VIDEO_FOLDER = PROJECT_FOLDER +"/Video/"
     VIDEO_PATH = VIDEO_FOLDER + VIDEO_NAME + ".mp4"
-    RESULTS_PATH = PROJECT_FOLDER + "/Results/" + date + "/"
+    #RESULTS_PATH = PROJECT_FOLDER + "/Results/" + date + "/"
 
     os.makedirs(RESULTS_PATH, exist_ok=True)
 
