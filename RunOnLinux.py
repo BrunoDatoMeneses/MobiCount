@@ -7,7 +7,7 @@ import os
 logger = logging.getLogger(__name__)
 
 FFMPEG_PATH = "ffmpeg" # RAMSES
-PROJECT_FOLDER = "/home/adminramses/Documents/MobiCount" # RAMSES
+PROJECT_FOLDER = "/home/bdato/MobiCount" # RAMSES
 DATE = datetime.now().strftime("%Y%m%d")
 DATE_TIME =  datetime.now().strftime("%Y%m%d_%H%M%S")
 RESULTS_FOLDER = PROJECT_FOLDER + "/Results/" + DATE + "/"

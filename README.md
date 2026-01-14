@@ -27,5 +27,11 @@
 - Filter fps: ffmpeg -i input.mp4 -filter:v "fps=30" output.mp4
 - Get 30 first seconds: ffmpeg -i input.mp4 -t 30 -c copy output.mp4
 
+### Create Linux Environement
+
+- python3 -m venv venv
+- source venv/bin/activate
+- pip install -r requirements.txt
+
 
 
