@@ -1,7 +1,7 @@
 import subprocess
 
 subprocess.Popen(
-    ["python", "RunOnLinux.py"],
+    ["python3", "RunOnLinux.py"],
     stdout=subprocess.DEVNULL,
     stderr=subprocess.DEVNULL,
     stdin=subprocess.DEVNULL,
