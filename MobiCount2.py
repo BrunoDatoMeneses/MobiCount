@@ -138,7 +138,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
     VIDEO_PATH = VIDEO_FOLDER + VIDEO_NAME + ".mp4"
     #RESULTS_PATH = PROJECT_FOLDER + "/Results/" + date + "/"
 
-    os.makedirs(RESULTS_PATH, exist_ok=True)
+    
 
     # Open the video file
     
@@ -197,7 +197,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
 
     ## ➡️ Step 5 — Process the Video
 
-    
+    log(f"Ultralytics Solutions: ✅ {counter.CFG}")
 
     os.environ['OPENCV_FFMPEG_READ_ATTEMPTS'] = '10000'
     # Process video
