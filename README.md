@@ -42,4 +42,12 @@
 - pip install -r requirements.txt
 
 
+### Create Python Environement and run on Windows (CMD)
+
+- At MobiCount\..
+- PYTHON_PATH\python.exe -m venv .venv
+- .venv\Scripts\activate.bat
+- pip install -r MobiCount\requirements.txt
+- 
+
 

@@ -183,7 +183,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
     counter = solutions.ObjectCounter(
         show=SHOW_VIDEO,  # display the output
         region=REGION,  # List of points defining the counting region.
-        model="yolo11n.pt",  # Path to Ultralytics YOLO Model File.
+        model="yolo26n.pt",  # Path to Ultralytics YOLO Model File.
         classes=CLASSES,  # Filters results by class index. For example, classes=[0, 2, 3] only tracks the specified classes.
         tracker="botsort.yaml",  # Specifies the tracking algorithm to use, e.g., bytetrack.yaml (faster) or botsort.yaml.
         conf = CONF, # Sets the confidence threshold for detections; lower values allow more objects to be tracked but may include false positives.
