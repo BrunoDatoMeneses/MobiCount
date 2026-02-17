@@ -29,8 +29,18 @@ def log(*args):
         logger.info(message)
 
 
+def runSeveralCounts(VIDEO_LIST, DATES_LIST, REGION_LIST, MODEL_LIST, PROJECT_FOLDER, FFMPEG_PATH, DATE, DATE_TIME, RESULTS_FOLDER):
 
-def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, DATE, DATE_TIME, RESULTS_PATH):
+    logger.info(str(datetime.now().strftime("[%Y%m%d_%H:%M:%S]")) +" "+ str(VIDEO_LIST) +" "+ str(DATES_LIST) +" "+ str(REGION_LIST) +" "+ str(MODEL_LIST))
+
+    for _videoName, _date, _region, _model in zip(VIDEO_LIST, DATES_LIST, REGION_LIST, MODEL_LIST):
+
+        logger.info(str(datetime.now().strftime("[%Y%m%d_%H:%M:%S]")) +" "+ str(_videoName) +" "+ str(_date) +" "+ str(_region) +" "+ str(_model))
+        MobiCount2.count(_videoName, _date, _region, PROJECT_FOLDER, FFMPEG_PATH, DATE, DATE_TIME, RESULTS_FOLDER, _model)
+
+
+
+def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, DATE, DATE_TIME, RESULTS_PATH, MODEL):
 
     ## ➡️ Step 1 — Install dependencies
 
@@ -95,8 +105,11 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
 
     ## ➡️ Step 3 — Set the parameters
 
-    CLASSES = [0, 1, 2, 3, 5, 7] # Filters results by class index. For example, classes=[0, 2, 3] only tracks persons, cars and motorcycles.
-    CLASSES_NAMES = ["person", "bicycle", "car", "motorcycle", "bus", "truck"]
+    # CLASSES = [0, 1, 2, 3, 5, 7] # Filters results by class index. For example, classes=[0, 2, 3] only tracks persons, cars and motorcycles.
+    # CLASSES_NAMES = ["person", "bicycle", "car", "motorcycle", "bus", "truck"]
+
+    CLASSES = [0, 1, 2, 3, 5] # Filters results by class index. For example, classes=[0, 2, 3] only tracks persons, cars and motorcycles.
+    CLASSES_NAMES = ["person", "bicycle", "car", "motorcycle", "bus"]
 
     """ names:
     0: person
@@ -117,7 +130,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
 
     SHOW_VIDEO = False
 
-    CONF = 0.3 # Sets the confidence threshold for detections; lower values allow more objects to be tracked but may include false positives.
+    CONF = 0.1 # Sets the confidence threshold for detections; lower values allow more objects to be tracked but may include false positives.
 
 
 
@@ -183,15 +196,19 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
     counter = solutions.ObjectCounter(
         show=SHOW_VIDEO,  # display the output
         region=REGION,  # List of points defining the counting region.
-        model="yolo26n.pt",  # Path to Ultralytics YOLO Model File.
+        model=MODEL,  # Path to Ultralytics YOLO Model File.
         classes=CLASSES,  # Filters results by class index. For example, classes=[0, 2, 3] only tracks the specified classes.
         tracker="botsort.yaml",  # Specifies the tracking algorithm to use, e.g., bytetrack.yaml (faster) or botsort.yaml.
         conf = CONF, # Sets the confidence threshold for detections; lower values allow more objects to be tracked but may include false positives.
-        iou = 0.5, # Sets the Intersection over Union (IoU) threshold for filtering overlapping detections.
+        iou = 0.9, # Sets the Intersection over Union (IoU) threshold for filtering overlapping detections.
         verbose=False,
         figsize=(3.2, 1.8),
+        blur_ratio=0.5,
+        max_hist = 5,
         device = "cpu", # Specifies the device for inference (e.g., cpu, cuda:0 or 0). Allows users to select between CPU, a specific GPU, or other compute devices for model execution.
     )
+
+
 
     results = None
 

@@ -15,10 +15,6 @@ RESULTS_FOLDER = PROJECT_FOLDER + "/Results/" + DATE + "/"
 os.makedirs(RESULTS_FOLDER, exist_ok=True)
 logging.basicConfig(filename=RESULTS_FOLDER +'/'+ DATE_TIME + '.log', encoding='utf-8', level=logging.DEBUG)
 
-
-for _videoName, _date, _region in zip(DATA.VIDEO_LIST, DATA.DATES_LIST, DATA.REGION_LIST):
-
-    logger.info(str(datetime.now().strftime("[%Y%m%d_%H:%M:%S]")) +" "+ str(_videoName) +" "+ str(_date) +" "+ str(_region))
-    MobiCount2.count(_videoName, _date, _region, PROJECT_FOLDER, FFMPEG_PATH, DATE, DATE_TIME, RESULTS_FOLDER)
+MobiCount2.runSeveralCounts(DATA.VIDEO_LIST, DATA.DATES_LIST, DATA.REGION_LIST, DATA.MODELS_LIST, PROJECT_FOLDER, FFMPEG_PATH, DATE, DATE_TIME, RESULTS_FOLDER)
 
 

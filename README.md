@@ -48,6 +48,12 @@
 - PYTHON_PATH\python.exe -m venv .venv
 - .venv\Scripts\activate.bat
 - pip install -r MobiCount\requirements.txt
-- 
+
+### Create Python Environement and run on Linux 
+
+- At MobiCount\..
+- python3 -m venv .venv
+- source .venv/bin/activate
+- pip install -r MobiCount\requirements.txt
 
 
