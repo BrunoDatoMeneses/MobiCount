@@ -36,7 +36,7 @@ def runSeveralCounts(VIDEO_LIST, DATES_LIST, REGION_LIST, MODEL_LIST, PROJECT_FO
     for _videoName, _date, _region, _model in zip(VIDEO_LIST, DATES_LIST, REGION_LIST, MODEL_LIST):
 
         logger.info(str(datetime.now().strftime("[%Y%m%d_%H:%M:%S]")) +" "+ str(_videoName) +" "+ str(_date) +" "+ str(_region) +" "+ str(_model))
-        MobiCount2.count(_videoName, _date, _region, PROJECT_FOLDER, FFMPEG_PATH, DATE, DATE_TIME, RESULTS_FOLDER, _model)
+        count(_videoName, _date, _region, PROJECT_FOLDER, FFMPEG_PATH, DATE, DATE_TIME, RESULTS_FOLDER, _model)
 
 
 
