@@ -183,7 +183,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
 
     codecs = ["avc1", "H264", "XVID", "MJPG"] # General use (avc1 -> .mp4), debug (MJPG -> .avi), Windows (XVID -> .avi), Min size (HEVC but not always installed -> .mkv)
     fourcc = cv2.VideoWriter_fourcc(*codecs[3])  # ou "H264", "XVID", "MJPG"
-    video_writer = cv2.VideoWriter(RESULTS_PATH + date_time + "__" + VIDEO_NAME +".avi", fourcc, NEW_FPS, (NEW_WIDTH, NEW_HEIGHT))
+    video_writer = cv2.VideoWriter(RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_" + MODEL + ".avi", fourcc, NEW_FPS, (NEW_WIDTH, NEW_HEIGHT))
 
     log("Fps:",fps,"Size:",w,"x",h,"Total frames:",total_frames)
 
@@ -196,7 +196,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
     counter = solutions.ObjectCounter(
         show=SHOW_VIDEO,  # display the output
         region=REGION,  # List of points defining the counting region.
-        model=MODEL,  # Path to Ultralytics YOLO Model File.
+        model=MODEL+".pt",  # Path to Ultralytics YOLO Model File.
         classes=CLASSES,  # Filters results by class index. For example, classes=[0, 2, 3] only tracks the specified classes.
         tracker="botsort.yaml",  # Specifies the tracking algorithm to use, e.g., bytetrack.yaml (faster) or botsort.yaml.
         conf = CONF, # Sets the confidence threshold for detections; lower values allow more objects to be tracked but may include false positives.
@@ -324,8 +324,8 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
 
         if frame_index == 1:
 
-            cv2.imwrite(RESULTS_PATH + date_time + "__" + VIDEO_NAME+"_FirstFrame.jpg", frame_resized)
-            log("First frame available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME+"_FirstFrame.jpg")
+            cv2.imwrite(RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_" + MODEL + "_FirstFrame.jpg", frame_resized)
+            log("First frame available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_" + MODEL + "_FirstFrame.jpg")
 
     #log(events_dict)
     #log(counts_by_range_lists)
@@ -339,7 +339,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
     
 
 
-    with open(RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_events"  + ".csv", "a", newline="") as f:
+    with open(RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_" + MODEL + "_events"  + ".csv", "a", newline="") as f:
 
         fieldnames = ["TIME", "FRAME"]
         for _vehicle in CLASSES_NAMES:
@@ -376,7 +376,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
 
         
 
-    with open(RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_counts"  + ".csv", "w", newline="") as f:
+    with open(RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_" + MODEL + "_counts"  + ".csv", "w", newline="") as f:
         fieldnames = ["TYPE", "IN", "OUT"]
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
@@ -385,9 +385,9 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
             row = {"TYPE": vehicle, **counts}
             writer.writerow(row)
 
-    log("Counts available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_counts.csv")
-    log("Events available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_events.csv")
-    log("Video available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME +".avi")
+    log("Counts available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_" + MODEL + "_counts.csv")
+    log("Events available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_" + MODEL + "_events.csv")
+    log("Video available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_" + MODEL +".avi")
 
     cap.release()
     video_writer.release()
@@ -397,10 +397,10 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
 
     log("Compressing video...")
 
-    output_file = RESULTS_PATH + date_time + "__" +  VIDEO_NAME + ".mp4"
+    output_file = RESULTS_PATH + date_time + "__" +  VIDEO_NAME + "_" + MODEL + ".mp4"
 
     process = subprocess.run([
-        FFMPEG_PATH, '-i', RESULTS_PATH + date_time + "__" + VIDEO_NAME +".avi",
+        FFMPEG_PATH, '-i', RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_" + MODEL +".avi",
         '-vcodec', 'libx265',           # Codec H265
         '-crf', '30',                   # 28-32 (18=better quality, 51=worse)
         '-preset', 'slow',              # Slower but better compression
@@ -418,7 +418,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
             log(line, end="")"""
 
 
-    #os.remove(RESULTS_PATH + date_time + "__" + VIDEO_NAME +".avi")
+    #os.remove(RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_" + MODEL +".avi")
 
     log("Compressed video available at " + output_file)
 

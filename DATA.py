@@ -119,15 +119,15 @@ REGION_LIST = [
 
 MODELS_LIST = [
 
-              "yolo11n.pt",
-              "yolo11n.pt",
-              "yolo11n.pt",
-              "yolo11s.pt",
-              "yolo11s.pt",
-              "yolo11m.pt",
-              "yolo11m.pt",
-              "yolo11l.pt",
-              "yolo11l.pt",
+              "yolo11n",
+              "yolo11n",
+              "yolo11n",
+              "yolo11s",
+              "yolo11s",
+              "yolo11m",
+              "yolo11m",
+              "yolo11l",
+              "yolo11l",
 
 
 ]
