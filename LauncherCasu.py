@@ -1,7 +1,7 @@
 import subprocess
 
 subprocess.Popen(
-    ["python", "RunOnCasu.py"],
+    ["python", "C:/Users/bdato/Documents/MobiCount/RunOnCasu.py"],
     stdout=subprocess.DEVNULL,
     stderr=subprocess.DEVNULL,
     stdin=subprocess.DEVNULL,
