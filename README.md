@@ -23,11 +23,15 @@
 
 ### FFMPEG
 
-- Remove audio canam: ffmpeg -i input.mp4 -c:v copy -an output.mp4
-  - for f in *.mp4; do ffmpeg -i "$f" -c:v copy -an "../no-audio_${f}"; done
+- Remove audio canam: 
+  - ffmpeg -i input.mp4 -c:v copy -an output.mp4
+  - for f in *.mp4; do ffmpeg -i "$f" -c:v copy -an "../no-audio_${f}"; done (bash)
+  - for %f in (*.mp4) do ffmpeg -i "%f" -c:v copy -an "../no-audio_%f" (windows CMD)
 - Filter fps: ffmpeg -i input.mp4 -filter:v "fps=30" output.mp4
 - Get 30 first seconds: ffmpeg -i input.mp4 -t 30 -c copy output.mp4
-- Rename to from *.MP4 to *.mp4 : for f in *.MP4; do mv "$f" "${f%.MP4}.mp4"; done
+- Rename to from *.MP4 to *.mp4 : 
+  - for f in *.MP4; do mv "$f" "${f%.MP4}.mp4"; done (bash)
+
 
 ### Create Python Environement (Linux)
 
