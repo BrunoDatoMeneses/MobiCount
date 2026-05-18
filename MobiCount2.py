@@ -139,7 +139,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
 
     SHOW_VIDEO = False
 
-    CONF = 0.1 # Sets the confidence threshold for detections; lower values allow more objects to be tracked but may include false positives.
+    CONF = 0.01 # Sets the confidence threshold for detections; lower values allow more objects to be tracked but may include false positives.
 
 
 
@@ -215,6 +215,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
         blur_ratio=0.5,
         max_hist = 5,
         device = "cpu", # Specifies the device for inference (e.g., cpu, cuda:0 or 0). Allows users to select between CPU, a specific GPU, or other compute devices for model execution.
+        #device = "cuda:0", 
     )
 
 
