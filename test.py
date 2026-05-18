@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 
 def test1():
 
@@ -23,4 +24,14 @@ def test2():
     print(additional)
 
 
-test2()
+def test3():
+
+    folder_path = "C:/Users/bdato/Documents/MobiCount/Video"
+    file_names = sorted([os.path.splitext(f)[0] for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))])
+    print(file_names)
+
+    for _name in file_names:
+        print ("____"+str(_name)+"____,")
+
+
+test3()

@@ -38,6 +38,15 @@ def runSeveralCounts(VIDEO_LIST, DATES_LIST, REGION_LIST, MODEL_LIST, PROJECT_FO
         logger.info(str(datetime.now().strftime("[%Y%m%d_%H:%M:%S]")) +" "+ str(_videoName) +" "+ str(_date) +" "+ str(_region) +" "+ str(_model))
         count(_videoName, _date, _region, PROJECT_FOLDER, FFMPEG_PATH, DATE, DATE_TIME, RESULTS_FOLDER, _model)
 
+def runSeveralConfigs(VIDEO_LIST, DATES_LIST, REGION_LIST, MODEL_LIST, PROJECT_FOLDER, FFMPEG_PATH, DATE, DATE_TIME, RESULTS_FOLDER):
+
+    logger.info(str(datetime.now().strftime("[%Y%m%d_%H:%M:%S]")) +" "+ str(VIDEO_LIST) +" "+ str(DATES_LIST) +" "+ str(REGION_LIST) +" "+ str(MODEL_LIST))
+
+    for _videoName, _date, _region, _model in zip(VIDEO_LIST, DATES_LIST, REGION_LIST, MODEL_LIST):
+
+        logger.info(str(datetime.now().strftime("[%Y%m%d_%H:%M:%S]")) +" "+ str(_videoName) +" "+ str(_date) +" "+ str(_region) +" "+ str(_model))
+        config(_videoName, _date, _region, PROJECT_FOLDER, FFMPEG_PATH, DATE, DATE_TIME, RESULTS_FOLDER, _model)
+
 
 
 def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, DATE, DATE_TIME, RESULTS_PATH, MODEL):
@@ -418,9 +427,212 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
             log(line, end="")"""
 
 
-    #os.remove(RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_" + MODEL +".avi")
+    
 
     log("Compressed video available at " + output_file)
+    os.remove(RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_" + MODEL +".avi")
+
+
+def config(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, DATE, DATE_TIME, RESULTS_PATH, MODEL):
+
+    ## ➡️ Step 1 — Install dependencies
+
+    
+
+    DO_INSTALL = False
+
+    if DO_INSTALL:
+
+        process = subprocess.Popen(["python", "--version"], stdout=subprocess.PIPE, text=True)
+        for line in process.stdout:
+            log(line, end="")
+
+
+        process = subprocess.run(["python", "-m","ensurepip","--upgrade"], stdout=subprocess.PIPE, text=True)
+        for line in process.stdout:
+            log(line, end="")
+
+        process = subprocess.run(["python", "-m","pip","install","opencv-python"], stdout=subprocess.PIPE, text=True)
+        for line in process.stdout:
+            log(line, end="")
+
+
+
+        process = subprocess.run(["python", "-m","pip","install","python-ffmpeg"], stdout=subprocess.PIPE, text=True)
+        for line in process.stdout:
+            log(line, end="")
+
+        process = subprocess.run(["python", "-m","pip","install","ultralytics"], stdout=subprocess.PIPE, text=True)
+        for line in process.stdout:
+            log(line, end="")
+
+        process = subprocess.run(["python", "-m","pip","install","--no-cache-dir","shapely>=2.0.0"], stdout=subprocess.PIPE, text=True)
+        for line in process.stdout:
+            log(line, end="")
+
+        process = subprocess.run(["python", "-m","pip","install","--no-cache-dir","lap>=0.5.12"], stdout=subprocess.PIPE, text=True)
+        for line in process.stdout:
+            log(line, end="")
+
+
+
+
+        
+
+
+
+    log("Install ready")
+    
+
+
+    ## ➡️ Step 2 — Set project folder, video name and starting hour
+
+    # FFMPEG_PATH = "C:/Users/bruno/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.0.1-full_build/bin/ffmpeg.exe"
+    # PROJECT_FOLDER = "C:/Users/bruno/OneDrive/Documents/Repositories/MOBICOUNT/MobiCount"
+    # FFMPEG_PATH = "ffmpeg" # RAMSES
+    # PROJECT_FOLDER = "/home/adminramses/Documents/MobiCount" # RAMSES
+
+    #VIDEO_NAME = "1191553-hd_1920_1080_25fps"
+    #START_DATE_AND_HOUR = datetime(2025, 1, 1, 14, 32, 9)
+
+
+    ## ➡️ Step 3 — Set the parameters
+
+    # CLASSES = [0, 1, 2, 3, 5, 7] # Filters results by class index. For example, classes=[0, 2, 3] only tracks persons, cars and motorcycles.
+    # CLASSES_NAMES = ["person", "bicycle", "car", "motorcycle", "bus", "truck"]
+
+    CLASSES = [0, 1, 2, 3, 5] # Filters results by class index. For example, classes=[0, 2, 3] only tracks persons, cars and motorcycles.
+    CLASSES_NAMES = ["person", "bicycle", "car", "motorcycle", "bus"]
+
+    """ names:
+    0: person
+    1: bicycle
+    2: car
+    3: motorcycle
+    5: bus
+    7: truck
+    """
+
+    #REGION = [(1500, 0), (1500, 3000)]  # VERTICAL LINE 
+    #REGION = [(1352, 0), (1352, 2028)]  # VERTICAL LINE 2K middle
+    #REGION = [(676, 0), (676, 2028)]  # VERTICAL LINE 2K first quarter
+    #REGION = [(901, 0), (901, 2028)]  # VERTICAL LINE 2K first tier
+    #REGION = [(0, 700), (1920, 700)]    # HORIZONTAL LINE
+    #REGION = [(860, 0), (860, 1080), (1060, 1080), (1060, 0)]  # VERTICAL RECTANGLE
+    #REGION = [(760, 0), (760, 1500), (1160, 1500), (1160, 0)]  # THIN VERTICAL RECTANGLE
+
+    SHOW_VIDEO = False
+
+    CONF = 0.1 # Sets the confidence threshold for detections; lower values allow more objects to be tracked but may include false positives.
+
+
+
+
+
+    ## ➡️ Step 4 — Create Yolo instance and video writer
+
+    
+
+    # Other parameters
+
+    date = DATE
+    date_time =  DATE_TIME
+
+    
+
+    VIDEO_FOLDER = PROJECT_FOLDER +"/Video/"
+    VIDEO_PATH = VIDEO_FOLDER + VIDEO_NAME + ".mp4"
+    #RESULTS_PATH = PROJECT_FOLDER + "/Results/" + date + "/"
+
+    
+
+    # Open the video file
+    
+
+    start_time = START_DATE_AND_HOUR
+    video_path = VIDEO_PATH
+    cap = cv2.VideoCapture(video_path)
+
+
+    assert cap.isOpened(), "Error reading video file"
+
+
+
+    # Video writer
+    w, h, fps = (int(cap.get(x)) for x in (cv2.CAP_PROP_FRAME_WIDTH, cv2.CAP_PROP_FRAME_HEIGHT, cv2.CAP_PROP_FPS))
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+    # Video Resize
+    SCALE_FACTOR = 1.0
+    NEW_WIDTH = int(w * SCALE_FACTOR)
+    NEW_HEIGHT = int(h * SCALE_FACTOR)
+    NEW_FPS = fps
+
+    # Video Display
+    DISPLAY_SCALE_FACTOR = 0.3
+    DISPLAY_WIDTH = int(w * SCALE_FACTOR)
+    DISPLAY_HEIGHT = int(h * SCALE_FACTOR)
+    DISPLAY_FPS = fps
+
+    #codecs = ["avc1", "H264", "XVID", "MJPG"] # General use (avc1 -> .mp4), debug (MJPG -> .avi), Windows (XVID -> .avi), Min size (HEVC but not always installed -> .mkv)
+    #fourcc = cv2.VideoWriter_fourcc(*codecs[3])  # ou "H264", "XVID", "MJPG"
+    #video_writer = cv2.VideoWriter(RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_" + MODEL + ".avi", fourcc, NEW_FPS, (NEW_WIDTH, NEW_HEIGHT))
+
+    log("Fps:",fps,"Size:",w,"x",h,"Total frames:",total_frames)
+
+
+
+
+
+    # Initialize object counter object
+    # https://docs.ultralytics.com/guides/object-counting/#real-world-applications
+    counter = solutions.ObjectCounter(
+        show=SHOW_VIDEO,  # display the output
+        region=REGION,  # List of points defining the counting region.
+        model=MODEL+".pt",  # Path to Ultralytics YOLO Model File.
+        classes=CLASSES,  # Filters results by class index. For example, classes=[0, 2, 3] only tracks the specified classes.
+        tracker="botsort.yaml",  # Specifies the tracking algorithm to use, e.g., bytetrack.yaml (faster) or botsort.yaml.
+        conf = CONF, # Sets the confidence threshold for detections; lower values allow more objects to be tracked but may include false positives.
+        iou = 0.9, # Sets the Intersection over Union (IoU) threshold for filtering overlapping detections.
+        verbose=False,
+        figsize=(3.2, 1.8),
+        blur_ratio=0.5,
+        max_hist = 5,
+        device = "cpu", # Specifies the device for inference (e.g., cpu, cuda:0 or 0). Allows users to select between CPU, a specific GPU, or other compute devices for model execution.
+    )
+
+
+
+    results = None
+
+    ## ➡️ Step 5 — Process the Video
+
+    log(f"Ultralytics Solutions: ✅ {counter.CFG}")
+
+    os.environ['OPENCV_FFMPEG_READ_ATTEMPTS'] = '10000'
+    # Process video
+    log("Processing Video...")
+
+    results = None
+
+
+
+    if cap.isOpened():
+
+        success, im0 = cap.read()
+
+        results = counter(im0)
+        
+        frame_resized = cv2.resize(results.plot_im, (NEW_WIDTH, NEW_HEIGHT))
+        cv2.imwrite(RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_" + MODEL + "_FirstFrame.jpg", frame_resized)
+        log("First frame available at " + RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_" + MODEL + "_FirstFrame.jpg")
+
+
+    cap.release()
+    cv2.destroyAllWindows()  # destroy all opened windows
+
+
+
 
 
 

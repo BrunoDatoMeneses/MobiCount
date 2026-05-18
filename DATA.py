@@ -5,6 +5,7 @@
 from datetime import datetime, timedelta
 
 VIDEO_LIST = [
+            "lièvre",
             "1191553-hd_1920_1080_25fps",
             "no-audio_7.1_13h25",
             "no-audio_7.1_13h26",
