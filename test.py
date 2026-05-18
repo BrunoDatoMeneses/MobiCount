@@ -32,6 +32,7 @@ def test3():
 
     for _name in file_names:
         print ("____"+str(_name)+"____,")
+    print(len(file_names))
 
 
 test3()
