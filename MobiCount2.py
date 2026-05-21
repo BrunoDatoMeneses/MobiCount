@@ -54,7 +54,7 @@ def runSeveralConfigs(VIDEO_LIST, DATES_LIST, REGION_LIST, MODEL_LIST, PROJECT_F
 def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, DATE, DATE_TIME, RESULTS_PATH, MODEL):
 
     
-    # Log GPU disponible
+    # Log GPU 
     if torch.cuda.is_available():
         gpu_name = torch.cuda.get_device_name(0)
         mem_total = torch.cuda.get_device_properties(0).total_memory / 1e9
@@ -485,7 +485,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
         logger.error(process.stderr.decode('utf-8', errors='replace')[-2000:])  # last 2000 chars
     else:
         logger.info(f"FFmpeg OK → {output_file}")
-        
+
     """if VERBOSE:
         for line in process.stdout:
             log(line, end="")"""
@@ -499,6 +499,17 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
 
 def config(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, DATE, DATE_TIME, RESULTS_PATH, MODEL):
 
+    # Log GPU 
+    if torch.cuda.is_available():
+        gpu_name = torch.cuda.get_device_name(0)
+        mem_total = torch.cuda.get_device_properties(0).total_memory / 1e9
+        mem_free = (torch.cuda.get_device_properties(0).total_memory
+                    - torch.cuda.memory_allocated(0)) / 1e9
+        logger.info(f"GPU: {gpu_name} | VRAM free: {mem_free:.1f}/{mem_total:.1f} GB")
+    else:
+        logger.warning("CUDA not available — running on CPU")
+    
+    
     ## ➡️ Step 1 — Install dependencies
 
     
@@ -637,9 +648,12 @@ def config(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH,
     cap = cv2.VideoCapture(video_path)
 
 
-    assert cap.isOpened(), "Error reading video file"
+    #assert cap.isOpened(), "Error reading video file"
 
-
+    if not cap.isOpened():
+        logger.error(f"Cannot open video: {video_path}")
+        return  # ou raise selon ton besoin
+    logger.info(f"Video opened: {video_path}")
 
     # Video writer
     w, h, fps = (int(cap.get(x)) for x in (cv2.CAP_PROP_FRAME_WIDTH, cv2.CAP_PROP_FRAME_HEIGHT, cv2.CAP_PROP_FPS))
@@ -704,7 +718,13 @@ def config(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH,
 
         success, im0 = cap.read()
 
-        results = counter(im0)
+        #results = counter(im0)
+
+        try:
+            results = counter(im0)
+        except Exception as e:
+            logger.error(f"YOLO counter crashed ")
+            logger.error(traceback.format_exc())
         
         frame_resized = cv2.resize(results.plot_im, (NEW_WIDTH, NEW_HEIGHT))
         cv2.imwrite(RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_" + MODEL + "_FirstFrame.jpg", frame_resized)
@@ -718,6 +738,12 @@ def config(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH,
         cv2.destroyAllWindows()
     except:
         pass
+
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+        mem_free = (torch.cuda.get_device_properties(0).total_memory
+                    - torch.cuda.memory_allocated(0)) / 1e9
+        logger.info(f"GPU memory after release: {mem_free:.1f} GB free")
 
 
 
