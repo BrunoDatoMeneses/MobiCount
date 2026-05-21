@@ -32,6 +32,7 @@ venv/
 # -------------------------
 Results/*
 Video/*
+Config/*
 #!Results/.gitkeep
 #!Video/.gitkeep
 
