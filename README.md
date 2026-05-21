@@ -10,16 +10,7 @@
     - On windows : winget install ffmpeg
     - On mac : brew install ffmpeg
 
-### Pycharm
 
-- Open Pycharm
-- Open working folder Mobicount
-- Open MobiCount\MobiCount.ipynb
-- Selectec default python interpreter 
-  - A message should appear proposing version 3.12
-  - If not, add manually python interpreter 3.12
-- Wait if automatic updates are running (bottom right of the window)
-- Run FlowCounter.ipynb step by step (wait for the notebook package to be installed when running first step)
 
 ### FFMPEG
 
@@ -35,19 +26,8 @@
   - for %f in (*.mp4) do ffmpeg -i "%f" -vf scale=1920:-2 -c:v libx264 -crf 23 -preset fast -c:a copy "../%~nf_HD.mp4"
 
 
-### Create Python Environement (Linux)
 
-- python3 -m venv venv
-- source venv/bin/activate
-- pip install -r requirements.txt
-- 
-### Create Python Environement (Windows)
 
-- PYTHON_PATH/python.exe -m venv venv
-- venv\Scripts\Activate.ps1 (powershell)
-- venv\Scripts\activate.bat (cmd)
-- source venv/Scripts/activate (Git Bash)
-- pip install -r requirements.txt
 
 
 ### Create Python Environement and run on Windows (CMD)
@@ -57,11 +37,6 @@
 - .venv\Scripts\activate.bat
 - pip install -r MobiCount\requirements.txt
 
-### Create Python Environement and run on Linux 
 
-- At MobiCount\..
-- python3 -m venv .venv
-- source .venv/bin/activate
-- pip install -r MobiCount\requirements.txt
 
 
