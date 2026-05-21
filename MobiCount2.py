@@ -10,6 +10,8 @@ import csv
 from ultralytics import solutions
 import copy
 import logging
+import torch
+import traceback
 
 
 VERBOSE = True
@@ -51,6 +53,18 @@ def runSeveralConfigs(VIDEO_LIST, DATES_LIST, REGION_LIST, MODEL_LIST, PROJECT_F
 
 def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, DATE, DATE_TIME, RESULTS_PATH, MODEL):
 
+    
+    # Log GPU disponible
+    if torch.cuda.is_available():
+        gpu_name = torch.cuda.get_device_name(0)
+        mem_total = torch.cuda.get_device_properties(0).total_memory / 1e9
+        mem_free = (torch.cuda.get_device_properties(0).total_memory
+                    - torch.cuda.memory_allocated(0)) / 1e9
+        logger.info(f"GPU: {gpu_name} | VRAM free: {mem_free:.1f}/{mem_total:.1f} GB")
+    else:
+        logger.warning("CUDA not available — running on CPU")
+    
+    
     ## ➡️ Step 1 — Install dependencies
 
     
@@ -189,9 +203,12 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
     cap = cv2.VideoCapture(video_path)
 
 
-    assert cap.isOpened(), "Error reading video file"
 
 
+    if not cap.isOpened():
+        logger.error(f"Cannot open video: {video_path}")
+        return  # ou raise selon ton besoin
+    logger.info(f"Video opened: {video_path}")
 
     # Video writer
     w, h, fps = (int(cap.get(x)) for x in (cv2.CAP_PROP_FRAME_WIDTH, cv2.CAP_PROP_FRAME_HEIGHT, cv2.CAP_PROP_FPS))
@@ -281,7 +298,15 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
             log("Video frame is empty or processing is complete.")
             break
 
-        results = counter(im0)
+        #results = counter(im0)
+
+        try:
+            results = counter(im0)
+        except Exception as e:
+            logger.error(f"YOLO counter crashed at frame {frame_index}: {e}")
+            logger.error(traceback.format_exc())
+            break  # or continue 
+
         current_time = start_time + timedelta(seconds=elapsed_seconds)
         
 
@@ -427,6 +452,13 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
     except:
         pass
 
+    # Free gpu memory
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+        mem_free = (torch.cuda.get_device_properties(0).total_memory
+                    - torch.cuda.memory_allocated(0)) / 1e9
+        logger.info(f"GPU memory after release: {mem_free:.1f} GB free")
+
     ## ➡️ Step 7 — Compress result video 
 
     log("Compressing video...")
@@ -443,10 +475,17 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
         output_file,
         '-y'  # Overwrite
     ], 
-    stdout=subprocess.DEVNULL,
-    stderr=subprocess.DEVNULL,
-    stdin=subprocess.DEVNULL,)
+    stdout=subprocess.PIPE,
+    stderr=subprocess.PIPE,   
+    stdin=subprocess.DEVNULL)
 
+
+    if process.returncode != 0:
+        logger.error(f"FFmpeg failed (code {process.returncode})")
+        logger.error(process.stderr.decode('utf-8', errors='replace')[-2000:])  # last 2000 chars
+    else:
+        logger.info(f"FFmpeg OK → {output_file}")
+        
     """if VERBOSE:
         for line in process.stdout:
             log(line, end="")"""
