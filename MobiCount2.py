@@ -165,7 +165,26 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
     # Open the video file
     
 
-    start_time = START_DATE_AND_HOUR
+    # Open the video file
+    
+    parts = VIDEO_NAME.split("_")
+    # ['no-audio', '7.3', '06052026', '07', '32', 'A', '4k', '25fps', 'HD']
+    #print(parts)
+    date_str = parts[2]  # '06052026'
+    hour     = parts[3]  # '07'
+    minute   = parts[4]  # '32'
+
+    dt = datetime(
+        year   = int(date_str[4:8]),
+        month  = int(date_str[2:4]),
+        day    = int(date_str[0:2]),
+        hour   = int(hour),
+        minute = int(minute)
+    )
+
+    log("start_time",dt)  # 2026-05-06 07:32:00
+    start_time = dt
+    #start_time = START_DATE_AND_HOUR
     video_path = VIDEO_PATH
     cap = cv2.VideoCapture(video_path)
 
@@ -536,6 +555,26 @@ def config(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH,
 
     # Other parameters
 
+    # Open the video file
+    
+    parts = VIDEO_NAME.split("_")
+    # ['no-audio', '7.3', '06052026', '07', '32', 'A', '4k', '25fps', 'HD']
+    #print(parts)
+    date_str = parts[2]  # '06052026'
+    hour     = parts[3]  # '07'
+    minute   = parts[4]  # '32'
+
+    dt = datetime(
+        year   = int(date_str[4:8]),
+        month  = int(date_str[2:4]),
+        day    = int(date_str[0:2]),
+        hour   = int(hour),
+        minute = int(minute)
+    )
+
+    log("start_time",dt)  # 2026-05-06 07:32:00
+    start_time = dt
+    #start_time = START_DATE_AND_HOUR
     date = DATE
     date_time =  DATE_TIME
 
@@ -550,7 +589,6 @@ def config(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH,
     # Open the video file
     
 
-    start_time = START_DATE_AND_HOUR
     video_path = VIDEO_PATH
     cap = cv2.VideoCapture(video_path)
 
