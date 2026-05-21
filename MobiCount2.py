@@ -420,7 +420,12 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
 
     cap.release()
     video_writer.release()
-    cv2.destroyAllWindows()  # destroy all opened windows
+    #cv2.destroyAllWindows()  # destroy all opened windows
+
+    try:
+        cv2.destroyAllWindows()
+    except:
+        pass
 
     ## ➡️ Step 7 — Compress result video 
 
@@ -668,7 +673,12 @@ def config(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH,
 
 
     cap.release()
-    cv2.destroyAllWindows()  # destroy all opened windows
+    #cv2.destroyAllWindows()  # destroy all opened windows
+
+    try:
+        cv2.destroyAllWindows()
+    except:
+        pass
 
 
 

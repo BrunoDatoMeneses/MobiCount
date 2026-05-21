@@ -130,4 +130,4 @@ REGION_LIST = [
 
 
 
-MODELS_LIST = ["yolo11l"] * 42
+MODELS_LIST = ["yolo11l"] * 42 # si plusieurs fois le même
