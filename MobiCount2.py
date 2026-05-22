@@ -286,7 +286,7 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
 
         
 
-        if frame_index % (fps) == 0:
+        if frame_index % (fps*50) == 0:
             ratio = frame_index/total_frames
             log(str(round(ratio*100, 2)) + " % Frames processed")
             #log(str(timedelta(seconds=elapsed_seconds)) + " Time processed")
