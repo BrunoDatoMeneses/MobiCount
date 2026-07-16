@@ -1,4 +1,4 @@
-opencv-python 
+opencv-python-headless 
 python-ffmpeg
 ultralytics
 shapely>=2.0.0
