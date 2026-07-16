@@ -45,5 +45,6 @@ Config/*
 # Other
 # -------------------------
 .DS_Store
+*.log
 
 venv/
