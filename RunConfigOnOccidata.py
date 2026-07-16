@@ -1,5 +1,5 @@
-from .. import DATA
-from .. import MobiCount2
+import DATA
+import MobiCount2
 import logging
 import traceback
 from datetime import datetime
