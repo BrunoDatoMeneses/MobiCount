@@ -24,6 +24,7 @@
   - for f in *.MP4; do mv "$f" "${f%.MP4}.mp4"; done (bash)
 - Resize to hd
   - for %f in (*.mp4) do ffmpeg -i "%f" -vf scale=1920:-2 -c:v libx264 -crf 23 -preset fast -c:a copy "../%~nf_HD.mp4"
+  - foreach ($f in Get-ChildItem *.mp4) { ffmpeg -i $f.FullName -vf "scale=1920:-2" -c:v libx264 -crf 23 -preset fast -c:a copy "..\$($f.BaseName)_HD.mp4" } (WINDOWS POWERSHELL)
 
 
 
