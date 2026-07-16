@@ -6,6 +6,7 @@
 #SBATCH --mail-type=END             # Notification par email de la
 #SBATCH --mail-user=bruno.dato@irit.fr     # fin de l'exécution du job.
 
+#SBATCH --partition=24CPUNodes
 #SBATCH --partition=RTX8000Nodes
 #SBATCH --gres=gpu:1
 #SBATCH --gres-flags=enforce-binding
