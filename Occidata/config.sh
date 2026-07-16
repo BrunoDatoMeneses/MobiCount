@@ -3,12 +3,18 @@
 # Options SBATCH :
 
 #SBATCH --job-name=Config_Mobicount    # Nom du Job  
-#SBATCH --cpus-per-task=4           # Allocation de 4 CPUs par Task
 #SBATCH --mail-type=END             # Notification par email de la
 #SBATCH --mail-user=bruno.dato@irit.fr     # fin de l'exécution du job.
-#SBATCH --partition=24CPUNodes
+
+#SBATCH --partition=RTX8000Nodes
+#SBATCH --gres=gpu:1
+#SBATCH --gres-flags=enforce-binding
+#SBATCH --cpus-per-task=4
+
+
 #SBATCH --output=logs/log.out
 #SBATCH --error=logs/error.err
+
 
 # Traitement
 
