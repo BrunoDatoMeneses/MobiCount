@@ -22,7 +22,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r MobiCount/requirements.txt
 
-cd /projects/campmob/MobiCount
+cd /projects/campmob/MobiCount/Occidata
 
 echo "##### Debut du Job ... #####"
 
