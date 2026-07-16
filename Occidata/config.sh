@@ -16,6 +16,7 @@
 #SBATCH --output=logs/log.out
 #SBATCH --error=logs/error.err
 
+export QT_QPA_PLATFORM=offscreen
 
 # Traitement
 
