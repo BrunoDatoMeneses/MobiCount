@@ -250,8 +250,8 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
         figsize=(3.2, 1.8),
         blur_ratio=0.5,
         max_hist = 5,
-        #device = "cpu", # Specifies the device for inference (e.g., cpu, cuda:0 or 0). Allows users to select between CPU, a specific GPU, or other compute devices for model execution.
-        device = "cuda:0", 
+        device = "cpu", # Specifies the device for inference (e.g., cpu, cuda:0 or 0). Allows users to select between CPU, a specific GPU, or other compute devices for model execution.
+        #device = "cuda:0", 
     )
 
 
@@ -696,8 +696,8 @@ def config(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH,
         figsize=(3.2, 1.8),
         blur_ratio=0.5,
         max_hist = 5,
-        #device = "cpu", # Specifies the device for inference (e.g., cpu, cuda:0 or 0). Allows users to select between CPU, a specific GPU, or other compute devices for model execution.
-        device = "cuda:0", 
+        device = "cpu", # Specifies the device for inference (e.g., cpu, cuda:0 or 0). Allows users to select between CPU, a specific GPU, or other compute devices for model execution.
+        #device = "cuda:0", 
     )
 
 
