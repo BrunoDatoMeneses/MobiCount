@@ -13,8 +13,8 @@
 #SBATCH --cpus-per-task=4
 
 
-#SBATCH --output=logs/log.out
-#SBATCH --error=logs/error.err
+#SBATCH --output=logs/log_%j.out
+#SBATCH --error=logs/error_%j.err
 
 export QT_QPA_PLATFORM=offscreen
 
