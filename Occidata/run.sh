@@ -24,7 +24,8 @@
 
 cd /projects/campmob/
 
-
+module load ffmpeg/8.0
+module load Python/3.12.2
 
 
 source .venv/bin/activate

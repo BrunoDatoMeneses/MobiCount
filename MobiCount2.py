@@ -468,7 +468,8 @@ def count(VIDEO_NAME, START_DATE_AND_HOUR, REGION, PROJECT_FOLDER, FFMPEG_PATH, 
     process = subprocess.run([
         FFMPEG_PATH, '-y', # Overwrite
         '-i', RESULTS_PATH + date_time + "__" + VIDEO_NAME + "_" + MODEL +".avi",
-        '-vcodec', 'libx265',           # Codec H265
+        # '-vcodec', 'libx265',           # Codec H265
+        '-vcodec', 'libx264',           # Codec H264
         '-crf', '30',                   # 28-32 (18=better quality, 51=worse)
         '-preset', 'slow',              # Slower but better compression
         '-vf', 'scale=iw*0.5:ih*0.5', # Rsolution 50%
