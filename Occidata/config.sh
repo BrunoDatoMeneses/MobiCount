@@ -34,6 +34,6 @@ cd /projects/campmob/MobiCount/
 
 echo "##### Debut du Job ... #####"
 
-python RunConfigOnOccidata.py
+python LauncherConfigCasu.py
 
 echo "##### Fin du Job.... #####"
