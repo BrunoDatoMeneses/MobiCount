@@ -7,9 +7,7 @@
 #SBATCH --mail-user=bruno.dato@irit.fr     # fin de l'exécution du job.
 
 #SBATCH --partition=24CPUNodes
-#SBATCH --partition=RTX8000Nodes
-#SBATCH --gres=gpu:1
-#SBATCH --gres-flags=enforce-binding
+
 #SBATCH --cpus-per-task=4
 
 
@@ -34,6 +32,6 @@ cd /projects/campmob/MobiCount/
 
 echo "##### Debut du Job ... #####"
 
-python LauncherConfigCasu.py
+python RunConfigOnOccidata.py
 
 echo "##### Fin du Job.... #####"
