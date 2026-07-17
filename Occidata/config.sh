@@ -26,7 +26,7 @@ module load Python/3.12.2
 
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r MobiCount/requirements.txt
+pip install -r MobiCount/requirementsHeadless.txt
 
 cd /projects/campmob/MobiCount/
 
