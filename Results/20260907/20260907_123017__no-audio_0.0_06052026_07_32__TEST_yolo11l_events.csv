@@ -1,0 +1,6 @@
+TIME,FRAME,person IN,person OUT,bicycle IN,bicycle OUT,car IN,car OUT,motorcycle IN,motorcycle OUT,bus IN,bus OUT,IDS
+07:32:00,14,0,0,0,0,0,1,0,0,0,0,[3]
+07:32:00,20,0,0,0,0,0,1,0,0,0,0,[1]
+07:32:05,128,0,0,0,0,0,1,0,0,0,0,[8]
+07:32:05,139,0,0,0,0,0,0,0,0,0,1,[213]
+07:32:06,170,0,0,0,0,0,1,0,0,0,0,[129]

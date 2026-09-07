@@ -50,14 +50,14 @@ MobiCount/
 ├── MobiCount.ipynb             # Exploration notebook
 ├── DATA.py                     # Videos + regions + models to process (active campaign)
 ├── DATA_save.py                 # Other config sets / saved campaigns
-├── RunOnWindows.py              # Local launch on Windows ("bruno" workstation)
-├── RunOnWindows_2.py            # Local launch on Windows ("chloe" workstation)
+├── RunOnWindows.py              # Local launch on Windows (workstation 1)
+├── RunOnWindows_2.py            # Local launch on Windows (workstation 2)
 ├── RunOnCasu.py                 # Launch on Windows workstation 
 ├── RunOnLinux.py                # Launch on Linux workstation 
 ├── RunOnOccidata.py             # Launch on cluster
 ├── RunConfigOnCasu.py           # Calibration mode (Windows)
 ├── RunConfigOnOccidata.py       # Calibration mode (Occidata)
-├── RunConfigOnWindows_2.py      # Calibration mode (Windows 2)
+├── RunConfigOnWindows.py        # Calibration mode (Windows)
 ├── LauncherWindows.py / LauncherCasu.py / LauncherLinux.py / LauncherConfigCasu.py
 │                                # Launch the Run* scripts in the background (detached subprocess.Popen)
 ├── FFMPEG_RemoveAudioCanal.py   # Utility: strips the audio track from a batch of videos
