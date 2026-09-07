@@ -4,13 +4,12 @@ import logging
 import traceback
 from datetime import datetime
 import os
-# SUR CASU
-# /!\ RunOnWindows_2
+# occidata
 
 logger = logging.getLogger(__name__)
 
-FFMPEG_PATH = "C:/Users/bdato/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1-full_build/bin/ffmpeg.exe"
-PROJECT_FOLDER = "C:/Users/bdato/Documents/MobiCount"
+FFMPEG_PATH = "ffmpeg"
+PROJECT_FOLDER = "/projects/campmob/MobiCount"
 DATE = datetime.now().strftime("%Y%m%d")
 DATE_TIME =  datetime.now().strftime("%Y%m%d_%H%M%S")
 RESULTS_FOLDER = PROJECT_FOLDER + "/Config/" + DATE + "/"

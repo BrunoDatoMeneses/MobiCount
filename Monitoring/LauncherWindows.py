@@ -5,7 +5,7 @@ import subprocess
 
 
 subprocess.Popen(
-    ["python", "RunOnWindows.py"],
+    ["python", "hw_logger.py","10","monitor.log"],
     stdout=subprocess.DEVNULL,
     stderr=subprocess.DEVNULL,
     stdin=subprocess.DEVNULL,
