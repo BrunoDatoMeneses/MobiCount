@@ -32,6 +32,7 @@ venv/
 # -------------------------
 Results/*
 Video/*
+Config/*
 #!Results/.gitkeep
 #!Video/.gitkeep
 
@@ -44,4 +45,6 @@ Video/*
 # Other
 # -------------------------
 .DS_Store
+*.log
 
+venv/
